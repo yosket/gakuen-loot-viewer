@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import { JSDOM } from 'jsdom'
 import { GetStaticProps, NextPage } from 'next'
+import Image from 'next/image'
 import { FC } from 'react'
 
 type Student = {
@@ -39,24 +40,33 @@ const Student: FC<StudentProps> = ({ student }) => {
           'from-orange-400 to-pink-600': grade === 1,
         })}
       />
-      <p
-        className={cn(
-          'font-bold text-lg w-16 h-16 rounded-full bg-white flex items-center justify-center mx-auto -mt-6',
-          {
+      <div className="w-24 h-24 rounded-full bg-white flex items-center justify-center mx-auto -mt-10">
+        <Image
+          src={`https://robohash.org/${encodeURIComponent(
+            student.name
+          )}?set=set4`}
+          width={64}
+          height={64}
+          alt=""
+        />
+      </div>
+      <div className="-mt-2">
+        <p
+          className={cn('font-bold text-lg', {
             'text-purple-500': grade === 3,
             'text-green-500': grade === 2,
             'text-orange-500': grade === 1,
-          }
-        )}
-      >
-        {student.className}
-      </p>
-      <div className="-mt-2">
-        <p>{`Student ID: ${id}`}</p>
+          })}
+        >
+          {student.className}
+        </p>
         <h3 className="font-bold text-2xl">{student.name}</h3>
-        <p className="text-sm text-gray-500">{student.guild}</p>
-        <p className="text-sm text-gray-500">{student.club}</p>
-        <p className="text-sm text-gray-500">{student.talent}</p>
+        <p>{`Student ID: ${id}`}</p>
+        <div className="mt-2">
+          <p className="text-sm text-gray-500">{student.guild}</p>
+          <p className="text-sm text-gray-500">{student.club}</p>
+          <p className="text-sm text-gray-500">{student.talent}</p>
+        </div>
       </div>
     </div>
     // <tr>
@@ -116,7 +126,7 @@ const HomePage: NextPage<{ students: Student[] }> = ({ students }) => {
   return (
     <div className="container mx-auto space-y-4 md:space-y-8">
       <h1 className="text-3xl text-center font-bold">Blockchain Gakuen Loot</h1>
-      <div className="grid md:grid-cols-3 gap-4 md:gap-8">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
         {students.map((student) => (
           <Student key={student.id} student={student} />
         ))}
