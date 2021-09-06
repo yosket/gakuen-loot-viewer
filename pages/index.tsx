@@ -125,6 +125,9 @@ const HomePage: NextPage<{ students: Student[] }> = ({ students }) => {
 
   return (
     <div className="container mx-auto space-y-4 md:space-y-8">
+      <div className="flex justify-center">
+        <Image src="/bca.png" alt="BCA" width={302 / 2} height={277 / 2} />
+      </div>
       <h1 className="text-3xl text-center font-bold">Blockchain Gakuen Loot</h1>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
         {students.map((student) => (
