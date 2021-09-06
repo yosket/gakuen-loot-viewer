@@ -1,7 +1,6 @@
-import {GetStaticProps, NextPage} from 'next'
-import {ethers} from 'ethers'
-import { FC, useEffect, useState } from 'react'
 import { JSDOM } from 'jsdom'
+import { GetStaticProps, NextPage } from 'next'
+import { FC } from 'react'
 
 type Student = {
   id: number
@@ -40,18 +39,28 @@ const Row: FC<RowProps> = ({ student }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const svgs = await Promise.all(Array.from(Array(300).keys()).map(i => {
-    return fetch(`https://metadata.mch.plus/erc721/137/0x9dC9e20E35F7Af608C4e7233a95DB50bDF5f8F9e/${i + 1}/image`)
-      .then(res => res.text())
-  }))
+  const svgs = await Promise.all(
+    Array.from(Array(300).keys()).map((i) => {
+      return fetch(
+        `https://metadata.mch.plus/erc721/137/0x9dC9e20E35F7Af608C4e7233a95DB50bDF5f8F9e/${
+          i + 1
+        }/image`
+      ).then((res) => res.text())
+    })
+  )
   const students = svgs
-    .map(svg => new JSDOM(svg))
+    .map((svg) => new JSDOM(svg))
     .map((dom, i) => {
-      const className = dom.window.document.querySelector('text[y="20"]')?.textContent
-      const name = dom.window.document.querySelector('text[y="40"]')?.textContent
-      const guild = dom.window.document.querySelector('text[y="60"]')?.textContent
-      const club = dom.window.document.querySelector('text[y="80"]')?.textContent
-      const talent = dom.window.document.querySelector('text[y="100"]')?.textContent
+      const className =
+        dom.window.document.querySelector('text[y="20"]')?.textContent
+      const name =
+        dom.window.document.querySelector('text[y="40"]')?.textContent
+      const guild =
+        dom.window.document.querySelector('text[y="60"]')?.textContent
+      const club =
+        dom.window.document.querySelector('text[y="80"]')?.textContent
+      const talent =
+        dom.window.document.querySelector('text[y="100"]')?.textContent
       return { id: i + 1, className, name, guild, club, talent }
     })
   return { props: { students } }
@@ -87,7 +96,7 @@ const HomePage: NextPage<{ students: Student[] }> = ({ students }) => {
           </tr>
         </thead>
         <tbody>
-          {students.map(student => (
+          {students.map((student) => (
             <Row key={student.id} student={student} />
           ))}
         </tbody>
