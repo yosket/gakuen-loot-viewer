@@ -1,3 +1,4 @@
+import cn from 'classnames'
 import { JSDOM } from 'jsdom'
 import { GetStaticProps, NextPage } from 'next'
 import { FC } from 'react'
@@ -11,11 +12,11 @@ type Student = {
   talent: string
 }
 
-type RowProps = {
+type StudentProps = {
   student: Student
 }
 
-const Row: FC<RowProps> = ({ student }) => {
+const Student: FC<StudentProps> = ({ student }) => {
   // const [owner, setOwner] = useState<string>('')
   // const [lastName, setLastName] = useState<string>('')
   // const [firstName, setFirstName] = useState<string>('')
@@ -26,15 +27,46 @@ const Row: FC<RowProps> = ({ student }) => {
   //   contract.getFirstName(tokenId).then(setFirstName)
   // }, [contract, tokenId])
 
+  const grade = Number(student.className.substr(0, 1))
+  const id = `000${student.id}`.slice(-3)
+
   return (
-    <tr>
-      <td>{student.id}</td>
-      <td>{student.className}</td>
-      <td>{student.name}</td>
-      <td>{student.guild}</td>
-      <td>{student.club}</td>
-      <td>{student.talent}</td>
-    </tr>
+    <div className="bg-white p-4 rounded-2xl shadow">
+      <div
+        className={cn('h-20 bg-gradient-to-r rounded-t-2xl -mt-4 -mx-4', {
+          'from-purple-500 to-indigo-500': grade === 3,
+          'from-green-400 to-cyan-500': grade === 2,
+          'from-orange-400 to-pink-600': grade === 1,
+        })}
+      />
+      <p
+        className={cn(
+          'font-bold text-lg w-16 h-16 rounded-full bg-white flex items-center justify-center mx-auto -mt-6',
+          {
+            'text-purple-500': grade === 3,
+            'text-green-500': grade === 2,
+            'text-orange-500': grade === 1,
+          }
+        )}
+      >
+        {student.className}
+      </p>
+      <div className="-mt-2">
+        <p>{`Student ID: ${id}`}</p>
+        <h3 className="font-bold text-2xl">{student.name}</h3>
+        <p className="text-sm text-gray-500">{student.guild}</p>
+        <p className="text-sm text-gray-500">{student.club}</p>
+        <p className="text-sm text-gray-500">{student.talent}</p>
+      </div>
+    </div>
+    // <tr>
+    //   <td>{student.id}</td>
+    //   <td>{student.className}</td>
+    //   <td>{student.name}</td>
+    //   <td>{student.guild}</td>
+    //   <td>{student.club}</td>
+    //   <td>{student.talent}</td>
+    // </tr>
   )
 }
 
@@ -82,9 +114,15 @@ const HomePage: NextPage<{ students: Student[] }> = ({ students }) => {
   }
 
   return (
-    <div className="container">
-      <h1>Blockchain Gakuen Loot</h1>
-      <table>
+    <div className="container mx-auto space-y-4 md:space-y-8">
+      <h1 className="text-3xl text-center font-bold">Blockchain Gakuen Loot</h1>
+      <div className="grid md:grid-cols-3 gap-4 md:gap-8">
+        {students.map((student) => (
+          <Student key={student.id} student={student} />
+        ))}
+      </div>
+
+      {/* <table>
         <thead>
           <tr>
             <th>ID</th>
@@ -100,7 +138,7 @@ const HomePage: NextPage<{ students: Student[] }> = ({ students }) => {
             <Row key={student.id} student={student} />
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   )
 }
