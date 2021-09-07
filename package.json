@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.4",
     "classnames": "^2.3.1",
     "ethers": "^5.4.6",
     "jsdom": "^17.0.0",
