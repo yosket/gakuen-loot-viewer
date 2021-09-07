@@ -16,7 +16,7 @@ const StudentCard: FC<Props> = ({ student, owner }) => {
   const id = `000${student.id}`.slice(-3)
 
   return (
-    <div className="bg-white p-4 rounded-2xl shadow">
+    <div className="bg-white p-4 rounded-2xl shadow flex flex-col">
       <div
         className={cn('h-20 bg-gradient-to-r rounded-t-2xl -mt-4 -mx-4', {
           'from-purple-500 to-indigo-500': grade === 3,
@@ -36,7 +36,7 @@ const StudentCard: FC<Props> = ({ student, owner }) => {
         />
       </div>
 
-      <div className="-mt-2">
+      <div className="-mt-2 flex-1">
         <p
           className={cn('font-bold text-lg', {
             'text-purple-500': grade === 3,
