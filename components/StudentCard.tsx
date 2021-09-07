@@ -56,7 +56,7 @@ const StudentCard: FC<Props> = ({ student, owner }) => {
       </div>
 
       <a
-        href={`https://polygonscan.com/address/${owner}`}
+        href={`https://polygonscan.com/address/${owner.address}`}
         target="_blank"
         rel="noreferrer"
         className="flex justify-between bg-gray-50 text-gray-500 text-sm p-4 mt-4 -mx-4 -mb-4 rounded-b-2xl space-x-2"
