@@ -1,6 +1,8 @@
+import { XCircleIcon } from '@heroicons/react/solid'
 import { GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/dist/client/router'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import StudentCard from '../components/StudentCard'
 import { getOwners } from '../lib/getOwners'
@@ -21,26 +23,28 @@ const HomePage: NextPage<{ students: Student[]; owners: Owner[] }> = ({
 
   const [listTitle, setListTitle] = useState<string>('Students')
 
+  const { class: className, guild, club, talent } = router.query
+
   const shownStudents: Student[] = useMemo(() => {
-    if (router.query.class) {
-      setListTitle(`Students of ${router.query.class}`)
-      return students.filter((s) => s.className === router.query.class)
+    if (className) {
+      setListTitle(`Students of ${className}`)
+      return students.filter((s) => s.className === className)
     }
-    if (router.query.guild) {
-      setListTitle(`Students of ${router.query.guild}`)
-      return students.filter((s) => s.guild === router.query.guild)
+    if (guild) {
+      setListTitle(`Students of ${guild}`)
+      return students.filter((s) => s.guild === guild)
     }
-    if (router.query.club) {
-      setListTitle(`Students of ${router.query.club}`)
-      return students.filter((s) => s.club === router.query.club)
+    if (club) {
+      setListTitle(`Students of ${club}`)
+      return students.filter((s) => s.club === club)
     }
-    if (router.query.talent) {
-      setListTitle(`Students of ${router.query.talent}`)
-      return students.filter((s) => s.talent === router.query.talent)
+    if (talent) {
+      setListTitle(`Students of ${talent}`)
+      return students.filter((s) => s.talent === talent)
     }
     setListTitle('Students')
     return students
-  }, [students, router.query.class, router.query.guild])
+  }, [students, className, guild, club, talent])
 
   if (!students) {
     return null
@@ -59,10 +63,20 @@ const HomePage: NextPage<{ students: Student[]; owners: Owner[] }> = ({
           height={277 / 2}
         />
       </h1>
-      <div>
-        <h2 className="text-3xl font-bold">{listTitle || 'Students'}</h2>
+      <div className="flex items-center space-x-4 md:space-x-8">
+        <div>
+          <h2 className="text-3xl font-bold">{listTitle || 'Students'}</h2>
+          {listTitle !== 'Students' && (
+            <span className="text-gray-500">{`${shownStudents.length} Students`}</span>
+          )}
+        </div>
         {listTitle !== 'Students' && (
-          <span className="text-gray-500">{`${shownStudents.length} Students`}</span>
+          <Link href="/">
+            <a className="bg-gray-500 text-white text-sm py-1 px-4 rounded-2xl whitespace-nowrap flex items-center space-x-1">
+              <XCircleIcon className="w-4 h-4" />
+              <span>Reset</span>
+            </a>
+          </Link>
         )}
       </div>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
