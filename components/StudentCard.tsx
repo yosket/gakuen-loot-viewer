@@ -1,6 +1,7 @@
 import { ExternalLinkIcon } from '@heroicons/react/outline'
 import cn from 'classnames'
 import Image from 'next/image'
+import Link from 'next/link'
 import { FC } from 'react'
 import { getCroppedAddress } from '../lib/util'
 import { Owner } from '../types/Owner'
@@ -37,21 +38,35 @@ const StudentCard: FC<Props> = ({ student, owner }) => {
       </div>
 
       <div className="-mt-2 flex-1">
-        <p
-          className={cn('font-bold text-lg', {
-            'text-purple-500': grade === 3,
-            'text-green-500': grade === 2,
-            'text-orange-500': grade === 1,
-          })}
-        >
-          {student.className}
-        </p>
+        <Link href={`/?class=${student.className}`}>
+          <a
+            className={cn('font-bold text-lg hover:underline', {
+              'text-purple-500': grade === 3,
+              'text-green-500': grade === 2,
+              'text-orange-500': grade === 1,
+            })}
+          >
+            {student.className}
+          </a>
+        </Link>
         <h3 className="font-bold text-2xl">{student.name}</h3>
         <p>{`Student ID: ${id}`}</p>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">{student.guild}</p>
-          <p className="text-sm text-gray-500">{student.club}</p>
-          <p className="text-sm text-gray-500">{student.talent}</p>
+        <div className="mt-2 grid justify-items-start">
+          <Link href={`/?guild=${student.guild}`}>
+            <a className="text-sm text-gray-500 hover:underline">
+              {student.guild}
+            </a>
+          </Link>
+          <Link href={`/?club=${student.club}`}>
+            <a className="text-sm text-gray-500 hover:underline">
+              {student.club}
+            </a>
+          </Link>
+          <Link href={`/?talent=${student.talent}`}>
+            <a className="text-sm text-gray-500 hover:underline">
+              {student.talent}
+            </a>
+          </Link>
         </div>
       </div>
 
