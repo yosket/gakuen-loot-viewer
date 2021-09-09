@@ -10,9 +10,11 @@ import { getStudents } from '../lib/getStudents'
 import { Owner } from '../types/Owner'
 import { Student } from '../types/Student'
 
+const ONE_DAY_BY_SECONDS = 60 * 60 * 24
+
 export const getStaticProps: GetStaticProps = async () => {
   const [students, owners] = await Promise.all([getStudents(), getOwners()])
-  return { props: { students, owners } }
+  return { props: { students, owners }, revalidate: ONE_DAY_BY_SECONDS }
 }
 
 const HomePage: NextPage<{ students: Student[]; owners: Owner[] }> = ({
