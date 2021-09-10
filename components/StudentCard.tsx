@@ -83,7 +83,9 @@ const StudentCard: FC<Props> = ({ student, owner }) => {
             <span>{owner.ens ?? getCroppedAddress(owner.address)}</span>
             <ExternalLinkIcon className="w-4 h-4" />
           </span>
-          <span>{`${ethers.utils.formatEther(owner.gCoinBalance)} GCOIN`}</span>
+          <span>{`${ethers.utils
+            .formatEther(owner.gCoinBalance)
+            .substr(0, 8)} GCOIN`}</span>
         </span>
       </a>
     </div>
