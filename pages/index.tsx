@@ -14,6 +14,7 @@ const ONE_DAY_BY_SECONDS = 60 * 60 * 24
 
 export const getStaticProps: GetStaticProps = async () => {
   const [students, owners] = await Promise.all([getStudents(), getOwners()])
+  console.log(owners)
   return { props: { students, owners }, revalidate: ONE_DAY_BY_SECONDS }
 }
 
@@ -53,7 +54,12 @@ const HomePage: NextPage<{ students: Student[]; owners: Owner[] }> = ({
   }
 
   const getOwner = (id: number): Owner =>
-    owners.find((o) => o.id === id) ?? { id: 0, address: '', ens: null }
+    owners.find((o) => o.id === id) ?? {
+      id: 0,
+      address: '',
+      ens: null,
+      gCoinBalance: '0',
+    }
 
   return (
     <div className="container mx-auto space-y-4 md:space-y-8">

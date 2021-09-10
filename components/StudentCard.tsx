@@ -1,5 +1,6 @@
-import { ExternalLinkIcon } from '@heroicons/react/outline'
+import { ExternalLinkIcon, UserIcon } from '@heroicons/react/outline'
 import cn from 'classnames'
+import { ethers } from 'ethers'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
@@ -74,12 +75,15 @@ const StudentCard: FC<Props> = ({ student, owner }) => {
         href={`https://polygonscan.com/address/${owner.address}`}
         target="_blank"
         rel="noreferrer"
-        className="flex justify-between bg-gray-50 text-gray-500 text-sm p-4 mt-4 -mx-4 -mb-4 rounded-b-2xl space-x-2"
+        className="flex justify-between items-center bg-gray-50 text-gray-500 text-sm p-4 mt-4 -mx-4 -mb-4 rounded-b-2xl space-x-2"
       >
-        <span>Owner</span>
-        <span className="inline-flex items-center space-x-2">
-          <span>{owner.ens ?? getCroppedAddress(owner.address)}</span>
-          <ExternalLinkIcon className="w-4 h-4" />
+        <UserIcon className="w-6 h-6" />
+        <span className="flex-1 grid justify-items-end">
+          <span className="inline-flex items-center space-x-2">
+            <span>{owner.ens ?? getCroppedAddress(owner.address)}</span>
+            <ExternalLinkIcon className="w-4 h-4" />
+          </span>
+          <span>{`${ethers.utils.formatEther(owner.gCoinBalance)} GCOIN`}</span>
         </span>
       </a>
     </div>
