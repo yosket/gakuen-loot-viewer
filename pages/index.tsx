@@ -14,7 +14,6 @@ const ONE_DAY_BY_SECONDS = 60 * 60 * 24
 
 export const getStaticProps: GetStaticProps = async () => {
   const [students, owners] = await Promise.all([getStudents(), getOwners()])
-  console.log(owners)
   return { props: { students, owners }, revalidate: ONE_DAY_BY_SECONDS }
 }
 
@@ -59,6 +58,10 @@ const HomePage: NextPage<{ students: Student[]; owners: Owner[] }> = ({
       address: '',
       ens: null,
       gCoinBalance: '0',
+      hp: '0',
+      phy: '0',
+      int: '0',
+      agi: '0',
     }
 
   return (

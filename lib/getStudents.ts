@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
 import { STUDENT_COUNT } from '../constants/app'
-import { CONTRACT_ADDRESS } from '../constants/contract'
+import { CONTRACT_ADDRESS } from '../constants/contracts'
 import { Student } from '../types/Student'
 
 const getMetadataApiUrl = (contract: string, tokenId: number): string =>

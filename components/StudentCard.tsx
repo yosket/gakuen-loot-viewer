@@ -8,6 +8,18 @@ import { getCroppedAddress } from '../lib/util'
 import { Owner } from '../types/Owner'
 import { Student } from '../types/Student'
 
+type ParamProps = {
+  label: string
+  value: number
+}
+
+const Param: FC<ParamProps> = ({ label, value }) => (
+  <div className="grid justify-items-center bg-gray-50 py-1 px-2 rounded-2xl">
+    <span className="text-xs text-gray-400">{label}</span>
+    <span className="text-gray-500">{value}</span>
+  </div>
+)
+
 type Props = {
   student: Student
   owner: Owner
@@ -38,21 +50,23 @@ const StudentCard: FC<Props> = ({ student, owner }) => {
         />
       </div>
 
-      <div className="-mt-2 flex-1">
-        <Link href={`/?class=${student.className}`}>
-          <a
-            className={cn('font-bold text-lg hover:underline', {
-              'text-purple-500': grade === 3,
-              'text-green-500': grade === 2,
-              'text-orange-500': grade === 1,
-            })}
-          >
-            {student.className}
-          </a>
-        </Link>
-        <h3 className="font-bold text-2xl">{student.name}</h3>
-        <p>{`Student ID: ${id}`}</p>
-        <div className="mt-2 grid justify-items-start">
+      <div className="-mt-2 flex-1 space-y-2 flex flex-col">
+        <div>
+          <Link href={`/?class=${student.className}`}>
+            <a
+              className={cn('font-bold text-lg hover:underline', {
+                'text-purple-500': grade === 3,
+                'text-green-500': grade === 2,
+                'text-orange-500': grade === 1,
+              })}
+            >
+              {student.className}
+            </a>
+          </Link>
+          <h3 className="font-bold text-2xl">{student.name}</h3>
+          <p>{`Student ID: ${id}`}</p>
+        </div>
+        <div className="grid justify-items-start content-start flex-1">
           <Link href={`/?guild=${student.guild}`}>
             <a className="text-sm text-gray-500 hover:underline">
               {student.guild}
@@ -68,6 +82,24 @@ const StudentCard: FC<Props> = ({ student, owner }) => {
               {student.talent}
             </a>
           </Link>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <Param
+            label="HP"
+            value={Number(ethers.utils.formatEther(owner.hp))}
+          />
+          <Param
+            label="PHY"
+            value={Number(ethers.utils.formatEther(owner.phy))}
+          />
+          <Param
+            label="INT"
+            value={Number(ethers.utils.formatEther(owner.int))}
+          />
+          <Param
+            label="AGI"
+            value={Number(ethers.utils.formatEther(owner.agi))}
+          />
         </div>
       </div>
 
